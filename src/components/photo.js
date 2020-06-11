@@ -1,15 +1,31 @@
-// import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { API_KEY, BASE_URL } from '../secrets'
 
 
-// export default function Photo(props) {
+function Photo() {
+    const [photo, setPhoto] = useState()
 
-//     axios.get("https://api.nasa.gov/planetary/apod?api_key=yeX2aVMl4CEHmu5DxqeL7BNBJQe5cPcGaJYj21cN")
-//     .then(res => {
-//       return(res.data.url)
-//       debugger
-//     })
-//     .catch(err => {
-//       console.log('this is an error message')
-//     })
+    useEffect(() => {
+        const fetchPhoto = () => {
 
-// }
+            axios.get(`${BASE_URL}${API_KEY}`)
+            .then(res =>{
+                console.log(res);
+            })
+            .catch(err => {
+                console.log('This is error', err)
+            })
+        };
+        fetchPhoto();
+    }, []);
+
+    return (
+        <div>
+            Hi
+        </div>
+    );
+
+}
+
+export default Photo;
