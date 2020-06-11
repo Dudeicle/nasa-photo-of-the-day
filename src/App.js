@@ -8,8 +8,34 @@ import PStyles from './components/pStyle.js'
 
 function App() {
 
-const [photo, setPhoto] = useState([])
-const [timer, setTimer] = useState(10)
+
+  const [photo, setPhoto] = useState([])
+  const [timer, setTimer] = useState(10)
+  
+
+
+useEffect(() => {
+  const parentDiv = document.createElement('div')
+  parentDiv.classList.add('clockDiv')
+  
+  const daysChild = document.createElement('div')
+  daysChild.classList.add('days')
+  daysChild.textContent = 'Hello'
+  
+  const hoursChild = document.createElement('div')
+  hoursChild.classList.add('hours')
+  
+  const minutesChild = document.createElement('div')
+  minutesChild.classList.add('minutes')
+  
+  const secondsChild = document.createElement('div')
+  secondsChild.classList.add('seconds')
+  
+  parentDiv.appendChild(daysChild)
+  parentDiv.appendChild(hoursChild)
+  parentDiv.appendChild(minutesChild)
+  parentDiv.appendChild(secondsChild)
+}, []);
 
 useEffect(() => {
     const fetchPhoto = () => {
@@ -25,12 +51,16 @@ useEffect(() => {
     fetchPhoto();
 }, []);
 
-// useEffect(() => {
-//     setTimeout(() => {
-//       setTimer(timer - 1)
-//     }, 1000)
-// }, [timer]);
 
+useEffect(() => {
+    setTimeout(() => {
+      if (timer > 1){
+        setTimer(timer - 1)
+      } else {
+        setTimer(timer + 9)
+      }
+    }, 1000)
+}, [timer]);
 
 
   return (
@@ -52,11 +82,11 @@ useEffect(() => {
             <PStyles>{photo.explanation}</PStyles>
       </div>
 
-      
-      {/* <h1>
+      <h1>
         {timer}  
-      </h1> */}
+      </h1>
     </BodyStyles>
   );
 }
 export default App
+
