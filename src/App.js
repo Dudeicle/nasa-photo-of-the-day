@@ -1,37 +1,45 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
-import Photo from './components/photo'
+// import Photo from './components/photo'
 import { API_KEY } from './secrets'
 import axios from 'axios'
 
-const BASE_URL = 'http://localhost:3000/'
+const BASE_URL = "https://api.nasa.gov/planetary/apod?api_key="
 
-export default function App() {
+function App() {
+// "https://www.nasa.gov/multimedia/imagegallery/iotd.html?api_key=yeX2aVMl4CEHmu5DxqeL7BNBJQe5cPcGaJYj21cN"
 
-
-  // "https://www.nasa.gov/multimedia/imagegallery/iotd.html?api_key=yeX2aVMl4CEHmu5DxqeL7BNBJQe5cPcGaJYj21cN"
+const [nasaPhoto, setNasaPhoto] = useState()
 
 useEffect(() => {
-  axios.get("https://api.nasa.gov/planetary/apod?api_key=yeX2aVMl4CEHmu5DxqeL7BNBJQe5cPcGaJYj21cN")
-    .then(res => {
-      console.log(res)
-      return `${res.data.date}`
-    })
-    .catch(err => {
-      console.log('this is an error message')
-    })
+  axios.get(`${BASE_URL}${API_KEY}`)
+  .then(res => {
+    console.log(`ALL`, res)
+    console.log(`DATA`, res.data)
+    setNasaPhoto(res.data.date)
+  })
+  .catch(err => {
+    console.log('this is an error message')
+  })
 }, [])
+
 
 
   return (
     <div className="App">
       <p>
         Read through the instructions in the README.md file to build your NASA
-        app! Have fun <span role="img" aria-label='go!'>🚀</span>!
-
-        
+        app! Have fun <span role="img" aria-label='go!'>🚀</span>!        
       </p>
-      <Photo />
+
+      <div className="photoContainer">
+        {nasaPhoto}
+      </div>
+
     </div>
+
+
   );
 }
+
+export default App
